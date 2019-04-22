@@ -23,6 +23,12 @@ class CDominoes {
     int getRight() {
         return rightSide;
     }
+    void setLeft(int leftNum) {
+        leftSide = leftNum;
+    }
+    void setRight(int rightNum) {
+        rightSide = rightNum;
+    }
     void printDomino() {
         printf("[%i|%i]", leftSide, rightSide);
     }

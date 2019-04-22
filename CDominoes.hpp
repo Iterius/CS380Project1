@@ -1,7 +1,7 @@
 #ifndef _CDominoes_
 #define _CDominoes_
 
-class CDominoes{
+class CDominoes {
     private:
     int leftSide;
     int rightSide;
@@ -12,6 +12,8 @@ class CDominoes{
     int getLeft();
     int getRight();
     void printDomino();
+    void setLeft(int leftNum);
+    void setRight(int rightNum);
 };
 
 #endif //_CDominoes_

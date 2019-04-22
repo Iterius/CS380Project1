@@ -1,4 +1,8 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <string>
+#include <iostream>
+#include <sstream>
 #include <vector>
 #include "CDominoes.hpp"
 #include "CPlayer.hpp"
@@ -13,10 +17,10 @@ class CTable {
     int head = 0;
     int tail = 0;
     std::vector<CDominoes> playedDominoes;
-    CPlayer * player1;
-    CPlayer * player2;
     CRandom * bag;
     public:
+	CPlayer * player1;
+    CPlayer * player2;
     void playDomino(CDominoes toPlay, bool isHead) {
         if(playedDominoes.size() == 0) {
             playedDominoes.push_back(toPlay);
@@ -50,33 +54,35 @@ class CTable {
     }
 	bool noPlays(CPlayer* turnTaker)
 	{
-		return !(turnTaker->contains(playedDominoes[tail].leftSide)
-			|| turnTaker->contains(playedDominoes[head].rightSide));
+		return !(turnTaker->contains(playedDominoes[tail].getLeft())
+			|| turnTaker->contains(playedDominoes[head].getRight()));
 	}
-	bool takeTurn(int playerTurn)
+	bool takeTurn(int * playerTurn)
 	{
 		CPlayer * turnTaker;
-		string input;
+		std::string input;
 		int toPlay;
 		int position;
-		if(playerTurn == 1)
+		if(*playerTurn == 1)
 		{
 			turnTaker = player1;
+			*playerTurn = 2;
 		}
 		else
 		{
 			turnTaker = player2;
+			*playerTurn = 1;
 		}
 		printBoard();
 		turnTaker->printHand();
 		while(noPlays(turnTaker))
 		{
-			if(bag->size == 0)
+			if(bag->Dominoes.size() == 0)
 			{
 				return false;
 			}
 			printf("No current move can be made, press enter to draw a tile!");
-			getline(cin, input);
+			getline(std::cin, input);
 			input = "";
 			turnTaker->addDomino(bag->getRand());
 		}
@@ -84,18 +90,24 @@ class CTable {
 		while(choosing)
 		{
 			printf("Which tile do you want to play? (select with the numbers below them)");
-			getline(cin, input);
-			if(input >> toPlay)
+			getline(std::cin, input);
+			if(std::stringstream(input) >> toPlay)
 			{
 				printf("Do you want to place this tile at the head or tail? (0 for head, 1 for tail");
-				getline(cin, input);
-				if(input >> position)
+				getline(std::cin, input);
+				if(std::stringstream(input) >> position)
 				{
 					if(position == 0)
 					{
-						if(playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].leftSide || 
-							playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].rightSide)
+						if(playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].getLeft() || 
+							playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].getRight())
 							{
+								if(playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].getRight()) 
+								{
+									int temp = turnTaker->getHand()[toPlay].getLeft();
+									turnTaker->getHand()[toPlay].setLeft(turnTaker->getHand()[toPlay].getRight());
+									turnTaker->getHand()[toPlay].setRight(temp);
+								}
 								playDomino(turnTaker->getHand()[toPlay], true);
 								turnTaker->removeDomino(toPlay);
 								choosing = false;
@@ -103,9 +115,15 @@ class CTable {
 					}
 					else
 					{
-						if(playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].leftSide || 
-							playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].rightSide)
+						if(playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].getLeft() || 
+							playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].getRight())
 							{
+								if(playedDominoes[head].getLeft() == turnTaker->getHand()[toPlay].getLeft()) 
+								{
+									int temp = turnTaker->getHand()[toPlay].getLeft();
+									turnTaker->getHand()[toPlay].setLeft(turnTaker->getHand()[toPlay].getRight());
+									turnTaker->getHand()[toPlay].setRight(temp);
+								}
 								playDomino(turnTaker->getHand()[toPlay], false);
 								turnTaker->removeDomino(toPlay);
 								choosing = false;

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <vector>
+#include <random>
 #include "CDominoes.hpp"
 #include "CPlayer.hpp"
 #include "CRandom.hpp"

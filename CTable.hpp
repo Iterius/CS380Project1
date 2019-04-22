@@ -9,9 +9,13 @@
 
 class CTable {
     public:
+    CPlayer * player1;
+    CPlayer * player2;
     void playDomino(CDominoes toPlay, bool isHead);
     CTable();
     void printBoard();
+    int getWinner();
+    bool takeTurn(int * playerTurn);
 };
 
 #endif //_CTable_

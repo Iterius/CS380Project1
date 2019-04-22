@@ -5,6 +5,7 @@
 
 class CRandom {
     public:
+    std::vector<CDominoes> Dominoes;
     CRandom();
     ~CRandom();
     CDominoes getRand();

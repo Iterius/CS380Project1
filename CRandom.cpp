@@ -8,8 +8,8 @@
 class CRandom {
     private:
     std::default_random_engine generation;
-    std::vector<CDominoes> Dominoes;
     public:
+    std::vector<CDominoes> Dominoes;
     CRandom(){
         for(int i = 0; i <= 6; i++) {
             for(int j = 0; j <= i; j++) {
