@@ -42,9 +42,111 @@ class CTable {
         }
     }
     void printBoard() {
+		printf("Current Board: \n");
         for(int i = 0; i < playedDominoes.size(); i++) {
             playedDominoes[i].printDomino();
         }
         printf("\n");
     }
+	bool noPlays(CPlayer* turnTaker)
+	{
+		return !(turnTaker->contains(playedDominoes[tail].leftSide)
+			|| turnTaker->contains(playedDominoes[head].rightSide));
+	}
+	bool takeTurn(int playerTurn)
+	{
+		CPlayer * turnTaker;
+		string input;
+		int toPlay;
+		int position;
+		if(playerTurn == 1)
+		{
+			turnTaker = player1;
+		}
+		else
+		{
+			turnTaker = player2;
+		}
+		printBoard();
+		turnTaker->printHand();
+		while(noPlays(turnTaker))
+		{
+			if(bag->size == 0)
+			{
+				return false;
+			}
+			printf("No current move can be made, press enter to draw a tile!");
+			getline(cin, input);
+			input = "";
+			turnTaker->addDomino(bag->getRand());
+		}
+		bool choosing = true;
+		while(choosing)
+		{
+			printf("Which tile do you want to play? (select with the numbers below them)");
+			getline(cin, input);
+			if(input >> toPlay)
+			{
+				printf("Do you want to place this tile at the head or tail? (0 for head, 1 for tail");
+				getline(cin, input);
+				if(input >> position)
+				{
+					if(position == 0)
+					{
+						if(playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].leftSide || 
+							playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].rightSide)
+							{
+								playDomino(turnTaker->getHand()[toPlay], true);
+								turnTaker->removeDomino(toPlay);
+								choosing = false;
+							}
+					}
+					else
+					{
+						if(playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].leftSide || 
+							playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].rightSide)
+							{
+								playDomino(turnTaker->getHand()[toPlay], false);
+								turnTaker->removeDomino(toPlay);
+								choosing = false;
+							}
+					}
+				}
+				else
+				{
+					printf("Invalid input!");
+					printBoard();
+					turnTaker->printHand();
+				}
+			}
+			else
+			{
+				printf("Invalid input!");
+				printBoard();
+				turnTaker->printHand();
+			}
+		}
+		
+		return true;
+	}
+	int getWinner()
+	{
+		if(player1->isEmpty())
+		{
+			return 1;
+		}
+		else if (player2->isEmpty())
+		{
+			return 2;
+		}
+		else if (player1->getHand().size() < player2->getHand().size())
+		{
+			return 1;
+		}
+		else if (player1->getHand().size() > player2->getHand().size())
+		{
+			return 2;
+		}
+		return 0;
+	}
 }

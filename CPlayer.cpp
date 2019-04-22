@@ -32,10 +32,16 @@ class CPlayer {
         return false;
     }
     void printHand() {
+		printf("Your hand: \n");
         for(int i = 0; i < Hand.size(); i++) {
             Hand[i].printDomino();
         }
         printf("\n");
+		for(int i = 0; i < Hand.size(); i++)
+		{
+			printf("[ %i ]",i);
+		}
+		printf("\n");
     }
     bool isEmpty() {
         return Hand.size() == 0;
