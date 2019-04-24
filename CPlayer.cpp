@@ -23,7 +23,7 @@ std::vector<CDominoes> CPlayer::getHand() {
     return Hand;
 }
 bool CPlayer::contains(int validPlay) {
-    for(int i = 0; i < Hand.size(); i++) {
+    for(int i = 0; i < (int)Hand.size(); i++) {
         if(Hand[i].contains(validPlay)) {
             return true;
         }
@@ -32,13 +32,14 @@ bool CPlayer::contains(int validPlay) {
 }
 void CPlayer::printHand() {
     printf("Your hand: \n");
-    for(int i = 0; i < Hand.size(); i++) {
+    for(int i = 0; i < (int)Hand.size(); i++) {
         Hand[i].printDomino();
+        printf(" ");
     }
     printf("\n");
-    for(int i = 0; i < Hand.size(); i++)
+    for(int i = 0; i < (int)Hand.size(); i++)
     {
-        printf("[ %i ]",i);
+        printf("[ %i ] ",i);
     }
     printf("\n");
 }

@@ -18,11 +18,11 @@ int CDominoes::getLeft() {
 int CDominoes::getRight() {
     return rightSide;
 }
-void CDominoes::setLeft(int leftNum) {
-    leftSide = leftNum;
-}
-void CDominoes::setRight(int rightNum) {
-    rightSide = rightNum;
+void CDominoes::flip()
+{
+    int temp = leftSide;
+    leftSide = rightSide;
+    rightSide = temp;
 }
 void CDominoes::printDomino() {
     printf("[%i|%i]", leftSide, rightSide);

@@ -18,6 +18,7 @@ public:
     CPlayer * player2;
     void playDomino(CDominoes toPlay, bool isHead);
     CTable();
+    ~CTable();
     void printBoard();
     int getWinner();
     bool takeTurn(int* playerTurn);

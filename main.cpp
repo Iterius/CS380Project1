@@ -5,6 +5,7 @@
 #include "CPlayer.h"
 #include "CRandom.h"
 #include "CTable.h"
+#include <stdlib.h>
 using namespace std;
 bool checkConditions(bool player1, bool player2)
 {
@@ -12,14 +13,22 @@ bool checkConditions(bool player1, bool player2)
 }
 int main() {
     CTable table = *(new CTable());
-    std::default_random_engine generation;
-	std::uniform_int_distribution<int> distribution(1, 2);
-    int playerTurn = distribution(generation);
-	printf("Player %i starts!", playerTurn);
+    int playerTurn = rand() % 2 + 1;
+	printf("Player %i starts! \n", playerTurn);
 	bool playing = true;
+	bool player1 = false;
+	bool player2 = false;
 	while(playing)
 	{
-		playing = checkConditions(table.takeTurn(&playerTurn), table.takeTurn(&playerTurn));
+	    if(playerTurn == 1)
+        {
+            player1 = table.takeTurn(&playerTurn);
+        }
+        else if (playerTurn == 2)
+        {
+            player2 = table.takeTurn(&playerTurn);
+        }
+		checkConditions(player1, player2);
 		if(table.player1->isEmpty() || table.player2->isEmpty())
 		{
 			playing = false;
@@ -32,6 +41,7 @@ int main() {
 		printf("It's a tie!");
 	}
 	else{
-	printf("Player %i wins!", winner);
+	printf("Player %i wins! \nRemaining tiles: Player's Hand:", winner);
+	table.player2.printHand();
 	}
 }

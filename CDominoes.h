@@ -12,8 +12,7 @@ public:
     int getLeft();
     int getRight();
     void printDomino();
-    void setLeft(int leftNum);
-    void setRight(int rightNum);
+    void flip();
 };
 
 #endif //_CDominoes_

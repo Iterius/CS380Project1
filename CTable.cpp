@@ -14,10 +14,19 @@ void CTable::playDomino(CDominoes toPlay, bool isHead) {
         playedDominoes.push_back(toPlay);
     }
     else if(isHead) {
+        if(toPlay.getLeft() != playedDominoes[head].getRight())
+        {
+            cout << "flip" << endl;
+            toPlay.flip();
+        }
         playedDominoes.push_back(toPlay);
         head++;
     }
     else {
+        if(toPlay.getRight() != playedDominoes[tail].getLeft())
+        {
+            toPlay.flip();
+        }
         playedDominoes.insert(playedDominoes.begin(), toPlay);
         head++;
     }
@@ -32,6 +41,12 @@ CTable::CTable() {
         player1->addDomino(bag->getRand());
         player2->addDomino(bag->getRand());
     }
+}
+CTable::~CTable()
+{
+    delete[] &bag;
+    delete[] &player1;
+    delete[] &player2;
 }
 void CTable::printBoard() {
     printf("Current Board: \n");
@@ -51,6 +66,7 @@ bool CTable::takeTurn(int* playerTurn)
     std::string input;
     int toPlay;
     int position;
+    cout << "Player " << *playerTurn << "'s turn!" << endl;
     if(*playerTurn == 1)
     {
         turnTaker = player1;
@@ -73,6 +89,8 @@ bool CTable::takeTurn(int* playerTurn)
         getline(std::cin, input);
         input = "";
         turnTaker->addDomino(bag->getRand());
+        printBoard();
+        turnTaker->printHand();
     }
     bool choosing = true;
     while(choosing)
@@ -81,7 +99,7 @@ bool CTable::takeTurn(int* playerTurn)
         getline(std::cin, input);
         if(std::stringstream(input) >> toPlay)
         {
-            printf("Do you want to place this tile at the head or tail? (0 for head, 1 for tail");
+            printf("Do you want to place this tile on the right or left? (0 for right, 1 for left)");
             getline(std::cin, input);
             if(std::stringstream(input) >> position)
             {
@@ -90,32 +108,32 @@ bool CTable::takeTurn(int* playerTurn)
                     if(playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].getLeft() ||
                         playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].getRight())
                         {
-                            if(playedDominoes[head].getRight() == turnTaker->getHand()[toPlay].getRight())
-                            {
-                                int temp = turnTaker->getHand()[toPlay].getLeft();
-                                turnTaker->getHand()[toPlay].setLeft(turnTaker->getHand()[toPlay].getRight());
-                                turnTaker->getHand()[toPlay].setRight(temp);
-                            }
                             playDomino(turnTaker->getHand()[toPlay], true);
                             turnTaker->removeDomino(toPlay);
                             choosing = false;
                         }
+                    else
+                    {
+                        printf("Invalid Play\n");
+                        printBoard();
+                        turnTaker->printHand();
+                    }
                 }
                 else
                 {
                     if(playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].getLeft() ||
                         playedDominoes[tail].getLeft() == turnTaker->getHand()[toPlay].getRight())
                         {
-                            if(playedDominoes[head].getLeft() == turnTaker->getHand()[toPlay].getLeft())
-                            {
-                                int temp = turnTaker->getHand()[toPlay].getLeft();
-                                turnTaker->getHand()[toPlay].setLeft(turnTaker->getHand()[toPlay].getRight());
-                                turnTaker->getHand()[toPlay].setRight(temp);
-                            }
                             playDomino(turnTaker->getHand()[toPlay], false);
                             turnTaker->removeDomino(toPlay);
                             choosing = false;
                         }
+                    else
+                    {
+                        printf("Invalid Play");
+                        printBoard();
+                        turnTaker->printHand();
+                    }
                 }
             }
             else
