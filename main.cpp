@@ -23,15 +23,16 @@ int main() {
 	bool playing = true;
 	bool player1 = false;
 	bool player2 = false;
+	bool automated = true;
 	while(playing)
 	{
 	    if(playerTurn == 1)
         {
-            player1 = table.takeTurn(&playerTurn);
+            player1 = table.takeTurn(&playerTurn, automated);
         }
         else if (playerTurn == 2)
         {
-            player2 = table.takeTurn(&playerTurn);
+            player2 = table.takeTurn(&playerTurn, automated);
         }
 		checkConditions(player1, player2);
 		if(table.player1->isEmpty() || table.player2->isEmpty())
@@ -46,8 +47,12 @@ int main() {
 		printf("It's a tie!");
 	}
 	else{
-	printf("Player %i wins! \nRemaining tiles: Player's Hand:", winner);
-	table.player2->printHand();
+	printf("Player %i wins! \nRemaining tiles:", winner);
+	if(winner == 1)
+        table.player2->printHand();
+    else
+        table.player1->printHand();
 	}
 	delete[]&table;
+	return 0;
 }

@@ -21,7 +21,7 @@ public:
     ~CTable();
     void printBoard();
     int getWinner();
-    bool takeTurn(int* playerTurn);
+    bool takeTurn(int* playerTurn, bool automated);
     bool noPlays(CPlayer* turnTaker);
 };
 
