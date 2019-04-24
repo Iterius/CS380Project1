@@ -1,3 +1,8 @@
+/*
+ * Authors: Daniel Reed and Kyle Atchley
+ * Class: CS380
+ * Project: 1
+ */
 #include <stdlib.h>
 #include <vector>
 #include <random>
@@ -42,6 +47,7 @@ int main() {
 	}
 	else{
 	printf("Player %i wins! \nRemaining tiles: Player's Hand:", winner);
-	table.player2.printHand();
+	table.player2->printHand();
 	}
+	delete[]&table;
 }
