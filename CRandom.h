@@ -1,11 +1,13 @@
 #ifndef _CRandom_
 #define _CRandom_
-#include "CDominoes.hpp"
-
+#include "CDominoes.h"
+using namespace std;
 
 class CRandom {
+    private:
+    default_random_engine generation;
     public:
-    std::vector<CDominoes> Dominoes;
+    vector<CDominoes> Dominoes;
     CRandom();
     ~CRandom();
     CDominoes getRand();

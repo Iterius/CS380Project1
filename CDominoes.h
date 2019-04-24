@@ -2,10 +2,10 @@
 #define _CDominoes_
 
 class CDominoes {
-    private:
+private:
     int leftSide;
     int rightSide;
-    public:
+public:
     CDominoes();
     CDominoes(int leftSide, int rightSide);
     bool contains(int validPlay);

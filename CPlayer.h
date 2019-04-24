@@ -3,10 +3,13 @@
 
 #include <stdlib.h>
 #include <vector>
-#include "CDominoes.hpp"
+#include "CDominoes.h"
 
 class CPlayer{
-    public:
+private:
+    std::vector<CDominoes> Hand;
+
+public:
     CPlayer();
     ~CPlayer();
     void addDomino(CDominoes);

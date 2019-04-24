@@ -1,49 +1,47 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <vector>
-#include "CDominoes.hpp"
+#include "CDominoes.h"
+#include "CPlayer.h"
 
 
 
-class CPlayer {
-    private:
-    std::vector<CDominoes> Hand;
-    public:
-    CPlayer() {}
-    ~CPlayer() {
-        delete[] &Hand;
-    }
-    void addDomino(CDominoes toAdd) {
-        Hand.push_back(toAdd);
-    }
-    void removeDomino(int toRemove) {
-        std::vector<CDominoes>::iterator position = Hand.begin();
-        position += toRemove;
-        Hand.erase(position);
-    }
-    std::vector<CDominoes> getHand() {
-        return Hand;
-    }
-    bool contains(int validPlay) {
-        for(int i = 0; i < Hand.size(); i++) {
-            if(Hand[i].contains(validPlay)) {
-                return true;
-            }
+
+CPlayer::CPlayer() {}
+CPlayer::~CPlayer() {
+    delete[] &Hand;
+}
+void CPlayer::addDomino(CDominoes toAdd) {
+    Hand.push_back(toAdd);
+}
+void CPlayer::removeDomino(int toRemove) {
+    std::vector<CDominoes>::iterator position = Hand.begin();
+    position += toRemove;
+    Hand.erase(position);
+}
+std::vector<CDominoes> CPlayer::getHand() {
+    return Hand;
+}
+bool CPlayer::contains(int validPlay) {
+    for(int i = 0; i < Hand.size(); i++) {
+        if(Hand[i].contains(validPlay)) {
+            return true;
         }
-        return false;
     }
-    void printHand() {
-		printf("Your hand: \n");
-        for(int i = 0; i < Hand.size(); i++) {
-            Hand[i].printDomino();
-        }
-        printf("\n");
-		for(int i = 0; i < Hand.size(); i++)
-		{
-			printf("[ %i ]",i);
-		}
-		printf("\n");
+    return false;
+}
+void CPlayer::printHand() {
+    printf("Your hand: \n");
+    for(int i = 0; i < Hand.size(); i++) {
+        Hand[i].printDomino();
     }
-    bool isEmpty() {
-        return Hand.size() == 0;
+    printf("\n");
+    for(int i = 0; i < Hand.size(); i++)
+    {
+        printf("[ %i ]",i);
     }
+    printf("\n");
+}
+bool CPlayer::isEmpty() {
+    return Hand.size() == 0;
 }
